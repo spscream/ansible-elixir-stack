@@ -1,13 +1,16 @@
 #!/usr/bin/env sh
 
+# Run this script from your project's root directory
+
 app_name=$(grep -m 1 -oh 'app: :[[:alnum:]_]*' mix.exs | sed 's/app:\ ://')
+remote_user='remote_user' # Replace with remote username
 git_repo_url=$(git config --get remote.origin.url)
 mkdir -p playbooks/vars playbooks/templates
 
 cat > playbooks/setup.yml <<EOF
 ---
 - hosts: app-servers
-  remote_user: root
+  remote_user: $remote_user
   vars_files:
     - vars/main.yml
 
@@ -19,7 +22,7 @@ EOF
 cat > playbooks/deploy.yml <<EOF
 ---
 - hosts: app-servers
-  remote_user: root
+  remote_user: $remote_user
   vars_files:
     - vars/main.yml
 
@@ -31,7 +34,7 @@ EOF
 cat > playbooks/migrate.yml <<EOF
 ---
 - hosts: app-servers
-  remote_user: root
+  remote_user: $remote_user
   vars_files:
     - vars/main.yml
 
@@ -43,7 +46,7 @@ EOF
 cat > playbooks/remove-app.yml <<EOF
 ---
 - hosts: app-servers
-  remote_user: root
+  remote_user: $remote_user
   vars_files:
     - vars/main.yml
 
