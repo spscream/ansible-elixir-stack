@@ -1,7 +1,9 @@
 ---
 - when: deploy_type == "restart"
+  sudo: yes
   name: stop app
   monit: name="{{ app_name }}" state=stopped
+  ignore_errors: true
 
 
 - when: deploy_type == "restart"
@@ -19,6 +21,7 @@
 
 
 - when: deploy_type == "restart"
+  sudo: yes
   name: start app
   monit: name="{{ app_name }}" state=started
 

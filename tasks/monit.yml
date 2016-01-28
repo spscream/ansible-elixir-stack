@@ -1,9 +1,11 @@
 ---
 - name: install monit
+  sudo: yes
   apt: name=monit update_cache=yes
 
 
 - name: allow localhost access in monit config
+  sudo: yes
   lineinfile: dest=/etc/monit/monitrc line="{{ item }}"
   with_items:
     - "set httpd port 2812 and"
@@ -33,12 +35,14 @@
 
 
 - name: add monit config for elixir app
+  sudo: yes
   template:
     src: app.monit.j2
     dest: "/etc/monit/conf.d/{{ app_name }}.monit"
 
 
 - name: add monit config for nginx
+  sudo: yes
   template:
     src: nginx.monit.j2
     dest: "/etc/monit/conf.d/nginx.monit"

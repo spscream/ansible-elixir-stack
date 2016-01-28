@@ -14,4 +14,5 @@
 
 
 - name: start nginx using monit
+  sudo: yes
   monit: name="nginx" state=started

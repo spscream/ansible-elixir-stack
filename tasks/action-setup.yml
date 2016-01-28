@@ -7,6 +7,7 @@
 
 
 - when: create_swap_file == True and swap_info.stat.exists == False
+  sudo: yes
   include: create-swap-file.yml
 
 
@@ -36,8 +37,10 @@
 
 
 - name: start nginx using monit
+  sudo: yes
   monit: name="nginx" state=started
 
 
 - name: reload nginx config
+  sudo: yes
   service: name=nginx state=reloaded

@@ -1,5 +1,6 @@
 ---
 - name: stop app
+  sudo: yes
   monit: name="{{ app_name }}" state=stopped
   ignore_errors: True
 
