@@ -21,7 +21,11 @@ Tool to deploy [Elixir](http://elixir-lang.org/) & [Phoenix](http://www.phoenixf
 
 ```sh
 $ pip install ansible
-$ ansible-galaxy install HashNuke.elixir-stack
+$ cd to/your/project/dir
+$ mkdir playbooks
+$ cd playbooks
+$ wget https://raw.githubusercontent.com/TWChennai/ansible-elixir-stack/master/ansible_requirements.yml
+$ ansible-galaxy install -p roles -r ansible_requirements.yml
 
 # assuming your SSH key is called `id_rsa`
 # run this everytime you start your computer
@@ -41,13 +45,22 @@ defp deps do
 end
 ```
 
-2.) In your project dir, run following command:
+2.) Move `elixir-stack.sh` in to your project's root directory
 
 ```sh
-$ curl -L http://git.io/ansible-elixir-stack.sh | bash
+$ cd your_project/
+$ mv playbooks/roles/HashNuke.elixir-stack/elixir-stack.sh elixir-stack.sh
 ```
 
-**FOLLOW INSTRUCTIONS OF ABOVE COMMAND**
+3.) Edit remote_user, add your server's IP addresses in `elixir-stack.sh`.
+
+4.) Run the script
+
+```sh
+$ sh elixir-stack.sh
+```
+
+**FOLLOW INSTRUCTIONS GIVEN BY ABOVE COMMAND**
 
 > Checkout the [documentation on configuration options](docs/configuration.md)
 
@@ -68,6 +81,20 @@ $ ansible-playbook playbooks/deploy.yml
 ```
 
 > By default the application is restarted on each deploy. [Read how to enable hot code-reloading](docs/hot-code-reloading.md).
+
+## Problems you might face  
+**postgresql repo for different Ubuntu versions**  
+
+In `tasks/postgres.yml`
+  * use `apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main"` for precise.
+  * use `apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"` for trusty.  
+
+
+**rebar installation failure**  
+
+Sometimes the default mirror will not respond. So use a different mirror for installing rebar.  
+
+In `tasks/project.yml` add `command: bash -lc "mix hex.config cdn_url https://s3-ap-southeast-1.amazonaws.com/s3.hex.pm/installs/1.0.0/rebar-2.3.1"` under `install rebar` task.
 
 ## FAQ
 
