@@ -17,9 +17,6 @@ post_frontend_build: "mix phoenix.digest"
 deployer: deployer
 
 domains: []
-app_alert_emails: []
-nginx_alert_emails: []
-
 create_swap_file: True
 
 # swap size in 1kb blocks
@@ -32,8 +29,16 @@ npm_config_jobs: 1
 npm_config_install_production: False
 secret_key_base_length: 64
 
+# Mail Alerts
 enable_mail_alerts: False
+
+app_alert_emails: []
+nginx_alert_emails: []
+
+smtp_host: ""
 smtp_port: 587
+smtp_user: ""
+smtp_password: ""
 smtp_use_tls: False
 
 # PRIVATE

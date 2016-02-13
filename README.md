@@ -20,20 +20,17 @@ Tool to deploy [Elixir](http://elixir-lang.org/) & [Phoenix](http://www.phoenixf
 ## Install
 
 ```sh
-$ pip install ansible
+$ brew install ansible
 $ cd to/your/project/dir
 $ mkdir playbooks
 $ cd playbooks
-$ wget https://raw.githubusercontent.com/TWChennai/ansible-elixir-stack/master/ansible_requirements.yml
+$ wget https://raw.githubusercontent.com/Kr00lIX/ansible-elixir-stack/master/ansible_requirements.yml
 $ ansible-galaxy install -p roles -r ansible_requirements.yml
 
 # assuming your SSH key is called `id_rsa`
 # run this everytime you start your computer
 $ ssh-add ~/.ssh/id_rsa
 ```
-
-> If the above commands fail, try with `sudo`.
-> For Mac OS X, Ansible is also available on homebrew.
 
 ## Setup your project
 
@@ -82,6 +79,34 @@ $ ansible-playbook playbooks/deploy.yml
 
 > By default the application is restarted on each deploy. [Read how to enable hot code-reloading](docs/hot-code-reloading.md).
 
+
+## Setup mail alert notification
+Edit your's `aybocks/vars/main.yml` 
+
+```
+enable_mail_alerts: True
+
+# Set this to your SMTP host.
+# Example values: `smtp.gmail.com`, `smtp.mailgun.org`
+smtp_host: ""
+
+smtp_port: 587
+
+smtp_user: ""
+smtp_password: ""
+
+#Does your SMTP host use TLS? As a reference, set this to `True` for GMail & `False` for [MailGun](http://mailgun.com).
+smtp_use_tls: False
+
+# List of email addresses to alert if the app goes down. No emails are sent by default.
+app_alert_emails: []
+
+# List of email addresses to alert if nginx goes down. No emails are sent by default.
+nginx_alert_emails: []
+
+```
+
+
 ## Problems you might face  
 **postgresql repo for different Ubuntu versions**  
 
@@ -104,7 +129,6 @@ Should fit servers of any size. In that case you could also increase the swap an
 * **How to have different set of servers for staging and production?**  
 Use the `inventory` file as a template and maintain different inventory files for staging and production. Let's say your staging inventory file is called `staging.inventory`, then you could do `ansible-playbook setup.yml -i staging.inventory` (and similar for deploy). Notice the `-i` switch.
 *B/w if you are going this way, you probably should learn Ansible or hire someone who knows it*
-
 
 ## Misc
 

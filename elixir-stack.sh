@@ -3,7 +3,7 @@
 # Run this script from your project's root directory
 
 app_name=$(grep -m 1 -oh 'app: :[[:alnum:]_]*' mix.exs | sed 's/app:\ ://')
-remote_user='remote_user' # Replace with remote username
+remote_user='ubuntu' # Replace with remote username
 git_repo_url=$(git config --get remote.origin.url)
 mkdir -p playbooks/vars playbooks/templates
 
@@ -77,6 +77,14 @@ cat > playbooks/vars/main.yml <<EOF
 app_name: $app_name
 repo_url: "$git_repo_url"
 app_port: 3001
+deploy_type: "restart"
+
+## for webpack
+frontend_build_command: "$(npm bin)/webpack -p"
+
+## for brunch
+#frontend_build_command: "$(npm bin)/brunch build --production"
+
 EOF
 
 
@@ -106,9 +114,9 @@ echo
 
 if [ ! -f ./.tool-versions ]; then
   cat > .tool-versions <<EOF
-erlang 18.0
-elixir 1.0.5
-nodejs 0.12.5
+erlang 18.2.1
+elixir 1.2.2
+nodejs 5.5.0
 EOF
   echo "TODO Edit .tool-versions file with appropriate versions of Erlang, Elixir & Node.js required for project"
 fi
