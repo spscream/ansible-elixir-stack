@@ -43,4 +43,4 @@
 
 - name: reload nginx config
   sudo: yes
-  service: name=nginx state=reloaded
+  monit: name=nginx state=reloaded
