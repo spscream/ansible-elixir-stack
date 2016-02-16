@@ -48,4 +48,5 @@
     dest: "/etc/monit/conf.d/nginx.monit"
 
 - name: reload monit
+  sudo: yes
   service: name=monit state=reloaded
