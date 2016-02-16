@@ -24,7 +24,7 @@ $ brew install ansible
 $ cd to/your/project/dir
 $ mkdir playbooks
 $ cd playbooks
-$ wget https://raw.githubusercontent.com/Kr00lIX/ansible-elixir-stack/master/ansible_requirements.yml
+$ wget https://raw.githubusercontent.com/spscream/ansible-elixir-stack/master/ansible_requirements.yml
 $ ansible-galaxy install -p roles -r ansible_requirements.yml
 
 # assuming your SSH key is called `id_rsa`
@@ -81,7 +81,7 @@ $ ansible-playbook playbooks/deploy.yml
 
 
 ## Setup mail alert notification
-Edit your's `aybocks/vars/main.yml` 
+Edit your's `aybocks/vars/main.yml`
 
 ```
 enable_mail_alerts: True
@@ -107,26 +107,26 @@ nginx_alert_emails: []
 ```
 
 
-## Problems you might face  
-**postgresql repo for different Ubuntu versions**  
+## Problems you might face
+**postgresql repo for different Ubuntu versions**
 
 In `tasks/postgres.yml`
   * use `apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main"` for precise.
-  * use `apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"` for trusty.  
+  * use `apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main"` for trusty.
 
 
-**rebar installation failure**  
+**rebar installation failure**
 
-Sometimes the default mirror will not respond. So use a different mirror for installing rebar.  
+Sometimes the default mirror will not respond. So use a different mirror for installing rebar.
 
 In `tasks/project.yml` add `command: bash -lc "mix hex.config cdn_url https://s3-ap-southeast-1.amazonaws.com/s3.hex.pm/installs/1.0.0/rebar-2.3.1"` under `install rebar` task.
 
 ## FAQ
 
-* **Is this only meant for small $5 servers?**  
+* **Is this only meant for small $5 servers?**
 Should fit servers of any size. In that case you could also increase the swap and npm
 
-* **How to have different set of servers for staging and production?**  
+* **How to have different set of servers for staging and production?**
 Use the `inventory` file as a template and maintain different inventory files for staging and production. Let's say your staging inventory file is called `staging.inventory`, then you could do `ansible-playbook setup.yml -i staging.inventory` (and similar for deploy). Notice the `-i` switch.
 *B/w if you are going this way, you probably should learn Ansible or hire someone who knows it*
 
